@@ -1,0 +1,107 @@
+create database dfms; 
+
+ 
+
+
+CREATE TABLE Admin (
+    admin_ID INT AUTO_INCREMENT PRIMARY KEY,
+    email VARCHAR(255) NOT NULL,
+    username VARCHAR(20) NOT NULL,
+    password VARCHAR(20) NOT NULL UNIQUE
+);
+
+
+
+CREATE TABLE Product (
+        product_ID INT AUTO_INCREMENT PRIMARY KEY,
+         product_name VARCHAR(20) UNIQUE,
+         price INT,
+         image  VARCHAR(255),
+         admin_ID INT,
+          customer_ID INT ,
+        FOREIGN KEY (admin_ID) REFERENCES Admin(admin_ID),
+        FOREIGN KEY (customer_ID) REFERENCES Customer(customer_ID)
+      );
+
+
+
+CREATE TABLE Customer (
+          customer_ID INT AUTO_INCREMENT PRIMARY KEY,
+         name VARCHAR(20),
+          password varchar(15) not null UNIQUE,
+            email varchar(15) not null,
+          contact_no INT
+       
+     );
+
+
+
+CREATE TABLE Review (
+     review_ID INT PRIMARY KEY AUTO_INCREMENT,
+    ratings INT,
+    reviewText varchar(150),
+
+customer_ID INT,
+ FOREIGN KEY (customer_ID) REFERENCES Customer(customer_ID)
+);
+
+
+
+
+
+CREATE TABLE cust_order (
+    order_id INT AUTO_INCREMENT PRIMARY KEY,
+    name VARCHAR(50),
+    number INT,
+    email VARCHAR(100),
+    method VARCHAR(20),
+    flat varchar(30),
+    street varchar(30),
+    city VARCHAR(50),
+    state VARCHAR(50),
+    country VARCHAR(50),
+    pin_code VARCHAR(20),
+    total_products INT,
+    total_price DECIMAL(10, 2),
+
+placed_on varchar(50) NOT NULL,
+  payment_status varchar(20) NOT NULL DEFAULT 'pending',
+  
+customer_ID INT,
+ FOREIGN KEY (customer_ID) REFERENCES Customer(customer_ID)
+);
+
+
+
+ 
+
+
+ CREATE TABLE Bill (
+          bill_id INT AUTO_INCREMENT PRIMARY KEY,
+         payment_mode VARCHAR(20),
+         quantity INT,  
+          total_price INT,
+           total int,     
+            order_id INT ,
+        FOREIGN KEY (order_id) REFERENCES cust_order(order_id)
+      );
+
+
+
+
+ 
+
+
+CREATE TABLE Cart (
+          cart_id INT AUTO_INCREMENT PRIMARY KEY,
+        name VARCHAR(50),
+ product_ID INT,
+          price DECIMAL(10, 2),
+         image  VARCHAR(255),
+      quantity INT,
+       FOREIGN KEY (product_ID) REFERENCES Product(product_ID)
+    );
+
+
+
+ 
